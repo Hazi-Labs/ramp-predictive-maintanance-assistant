@@ -4,8 +4,67 @@ from openai import OpenAI
 
 st.set_page_config(
     page_title="RAMP Predictive Maintenance Assistant",
-    page_icon="🤖",
+    page_icon="⚙️",
     layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+st.markdown(
+    """
+    <style>
+    .main {
+        background: linear-gradient(180deg, #0E1117 0%, #111827 100%);
+    }
+
+    .block-container {
+        padding-top: 1.5rem;
+        padding-bottom: 2rem;
+        max-width: 1200px;
+    }
+
+    h1, h2, h3 {
+        color: #F5F7FA;
+        letter-spacing: -0.02em;
+    }
+
+    p, li, div {
+        color: #E5E7EB;
+    }
+
+    .stChatMessage {
+        border-radius: 16px;
+        padding: 0.6rem;
+        background-color: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .stTextInput input, .stChatInput input {
+        border-radius: 12px !important;
+    }
+
+    .creator-card {
+        background: linear-gradient(135deg, #172033 0%, #1F2A44 100%);
+        padding: 1rem 1.2rem;
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,0.08);
+        margin-bottom: 1rem;
+    }
+
+    .hero-box {
+        background: linear-gradient(135deg, #13213A 0%, #1D3557 100%);
+        padding: 1.2rem 1.4rem;
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,0.08);
+        margin-bottom: 1rem;
+    }
+
+    .small-note {
+        font-size: 0.95rem;
+        color: #C7D2E0;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
 )
 
 PROJECT_CONTEXT = '''
@@ -289,24 +348,65 @@ Behavior style:
 - explain what the result means for action or decision-making
 - answer confidently using only the project facts above
 '''
-st.title("RAMP Predictive Maintenance Assistant")
-st.caption("Ask about the capstone project, dashboard meaning, model results, RAMP logic, and maintenance actions.")
+
+st.markdown(
+    """
+    <div class="hero-box">
+        <h1 style="margin-bottom:0.35rem;">RAMP Predictive Maintenance Assistant</h1>
+        <p style="font-size:1.08rem; margin-bottom:0.45rem;">
+            Natural-language decision support for the capstone project:
+            <strong>Predictive Maintenance and Decision Support System for Warehouse Automation</strong>
+        </p>
+        <p class="small-note">
+            Ask about dashboard interpretation, model results, RAMP risk logic, maintenance priorities,
+            business value, future deployment, or the project creator.
+        </p>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 with st.sidebar:
-    st.header("About")
-    st.write("This chatbot explains the Predictive Maintenance and Decision Support System for Warehouse Automation.")
-    st.write("This is a Level 1 public demo using fixed project knowledge.")
-    st.subheader("Suggested questions")
     st.markdown(
-        '''
+        """
+        <div class="creator-card">
+            <h3 style="margin-bottom:0.35rem;">About This Project</h3>
+            <p style="margin-bottom:0.5rem;">
+                Graduate capstone focused on predictive maintenance, dashboard-driven decision support,
+                workflow automation, and AI-assisted interpretation.
+            </p>
+            <p style="margin-bottom:0.2rem;"><strong>Created by:</strong> Hazi Ali Pattan</p>
+            <p style="margin-bottom:0.2rem;"><strong>Program:</strong> MS in Marketing Analytics & Insights</p>
+            <p style="margin-bottom:0.2rem;"><strong>University:</strong> Wright State University</p>
+            <p style="margin-bottom:0;"><strong>Contact:</strong> hazialipattan@gmail.com</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.subheader("Suggested Questions")
+    st.markdown(
+        """
 - What problem does this project solve?
 - Why was Random Forest selected?
 - What does the RAMP framework do?
 - How many entries need Immediate Action?
 - What does the Executive Overview page show?
 - What business value does this system provide?
-        '''
+- Who created this project?
+        """
     )
+
+    st.subheader("Current Demo Scope")
+    st.write(
+        "This is a Level 1 public demo using curated project knowledge. "
+        "It explains the capstone, dashboard logic, counts, model results, and decision-support reasoning."
+    )
+
+st.info(
+    "Tip: Ask decision-oriented questions such as “What should a manager focus on first?”, "
+    "“Why was Random Forest selected?”, or “How does the RAMP Decision Support page help in decision-making?”"
+)
 
 api_key = st.secrets.get("OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY")
 if not api_key:
@@ -319,7 +419,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = [
         {
             "role": "assistant",
-            "content": "Hi — I’m the RAMP Predictive Maintenance Assistant. Ask me about the project, the dashboard, model results, RAMP actions, or maintenance priorities."
+            "content": "Hi — I’m the RAMP Predictive Maintenance Assistant. Ask me about the project, the dashboard, model results, RAMP actions, maintenance priorities, or future deployment possibilities."
         }
     ]
 
